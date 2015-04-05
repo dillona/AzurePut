@@ -56,7 +56,7 @@ namespace AzurePut
                 if (blob.Exists())
                 {
                     System.Console.WriteLine(String.Format("Blob already exists for {0}. Skipping", blob.Name));
-                    return;
+                    continue;
                 }
                 if (!File.Exists(path))
                 {
