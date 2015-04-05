@@ -21,7 +21,7 @@ namespace AzurePut
                 return;
             }
 
-            CloudStorageAccount  storageAccount;
+            CloudStorageAccount storageAccount;
             CloudBlobClient blobClient;
             try
             {
@@ -41,19 +41,19 @@ namespace AzurePut
                 container.Create();
             }
 
-            Parallel.ForEach(args.Skip(1), path =>
+            foreach (var path in args.Skip(1))
+            {
+                //var file = File.OpenRead(path);
+                System.Console.WriteLine(path);
+                var filename = Path.GetFileName(path);
+                var blob = container.GetBlockBlobReference(filename);
+                if (blob.Exists())
                 {
-                    //var file = File.OpenRead(path);
-                    System.Console.WriteLine(path);
-                    var filename = Path.GetFileName(path);
-                    var blob = container.GetBlockBlobReference(filename);
-                    if (blob.Exists())
-                    {
-                        System.Console.WriteLine(String.Format("Blob already exists for {0}. Skipping", blob.Name));
-                        return;
-                    }
-                    blob.UploadFromFile(path, FileMode.Open);
-                });
+                    System.Console.WriteLine(String.Format("Blob already exists for {0}. Skipping", blob.Name));
+                    return;
+                }
+                blob.UploadFromFile(path, FileMode.Open);
+            }
         }
     }
 }
