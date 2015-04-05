@@ -14,6 +14,12 @@ namespace AzurePut
     {
         static void Main(string[] args)
         {
+            if (args.Length < 2)
+            {
+                System.Console.WriteLine("Usage: AzurePut.exe <container> <file> [<file> ...]");
+                return;
+            }
+
             var connStr = System.Environment.GetEnvironmentVariable("StorageConnectionString");
             if (connStr == null)
             {
